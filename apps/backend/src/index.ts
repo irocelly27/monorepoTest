@@ -8,6 +8,7 @@ import { productsRoutes } from './routes/products'
 import { cartRoutes } from './routes/cart'
 import { orderRoutes } from './routes/orders'
 import { reviewRoutes } from './routes/reviews'
+import { usersRoutes } from './routes/users'
 import { db } from './db'
 
 const app = new Hono()
@@ -30,6 +31,7 @@ app.route('/api/products', productsRoutes)
 app.route('/api/cart', cartRoutes)
 app.route('/api/orders', orderRoutes)
 app.route('/api/reviews', reviewRoutes)
+app.route('/api/users', usersRoutes)
 
 const port = 3001
 console.log(`Server is running on port ${port}`)
