@@ -36,11 +36,12 @@ productsRoutes.get('/', async (c) => {
   }
 
   try {
-    const allProducts = await db.query.products.findMany({
-      where: conditions.length > 0 ? and(...conditions) : undefined,
-      orderBy: orderByFilter
-    })
-    return c.json(allProducts)
+    // Temporary bypass to test if DB is causing the hang
+    // const allProducts = await db.query.products.findMany({
+    //   where: conditions.length > 0 ? and(...conditions) : undefined,
+    //   orderBy: orderByFilter
+    // })
+    return c.json([{ id: 1, name: 'Test Product', price: 1000 }])
   } catch (err: any) {
     console.error("Database query failed:", err)
     return c.json({ error: "Database connection failed", details: err.message }, 500)
