@@ -33,8 +33,13 @@ app.route('/api/orders', orderRoutes)
 app.route('/api/reviews', reviewRoutes)
 app.route('/api/users', usersRoutes)
 
-export default app
+if (process.env.VERCEL !== '1') {
+  const port = 3001
+  console.log(`Server is running on port ${port}`)
+  serve({
+    fetch: app.fetch,
+    port
+  })
+}
 
-app.get('/test', (c) => {
-  return c.json({ ok: true })
-})
+export default app
