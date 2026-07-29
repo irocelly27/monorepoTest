@@ -6,7 +6,7 @@ import { authMiddleware } from '../middleware/auth'
 import { zValidator } from '@hono/zod-validator'
 import { z } from 'zod'
 
-export const orderRoutes = new Hono()
+export const orderRoutes = new Hono<{ Variables: { user: any } }>()
 
 orderRoutes.use('*', authMiddleware)
 

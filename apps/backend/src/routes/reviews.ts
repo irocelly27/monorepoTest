@@ -6,7 +6,7 @@ import { authMiddleware } from '../middleware/auth'
 import { zValidator } from '@hono/zod-validator'
 import { z } from 'zod'
 
-export const reviewRoutes = new Hono()
+export const reviewRoutes = new Hono<{ Variables: { user: any } }>()
 
 const reviewSchema = z.object({
   productId: z.number(),

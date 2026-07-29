@@ -11,7 +11,7 @@ import { reviewRoutes } from './routes/reviews'
 import { usersRoutes } from './routes/users'
 import { db } from './db'
 
-const app = new Hono()
+const app = new Hono<{ Variables: { user: any } }>()
 
 // Middleware
 app.use('*', logger())

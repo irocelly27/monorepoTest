@@ -6,7 +6,7 @@ import { authMiddleware } from '../middleware/auth'
 import * as fs from 'fs'
 import * as path from 'path'
 
-export const productsRoutes = new Hono()
+export const productsRoutes = new Hono<{ Variables: { user: any } }>()
 
 // Get all products
 productsRoutes.get('/', async (c) => {

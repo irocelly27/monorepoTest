@@ -7,7 +7,7 @@ import { eq } from 'drizzle-orm'
 import { db } from '../db'
 import { users } from '../db/schema'
 
-export const authRoutes = new Hono()
+export const authRoutes = new Hono<{ Variables: { user: any } }>()
 
 // Validation schemas
 const registerSchema = z.object({

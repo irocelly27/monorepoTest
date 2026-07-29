@@ -4,7 +4,7 @@ import { db } from '../db'
 import { users, orders, orderItems, products } from '../db/schema'
 import { authMiddleware } from '../middleware/auth'
 
-export const usersRoutes = new Hono()
+export const usersRoutes = new Hono<{ Variables: { user: any } }>()
 
 // Middleware to check for ADMIN role
 const requireAdmin = async (c: any, next: any) => {
