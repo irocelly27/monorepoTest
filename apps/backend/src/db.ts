@@ -8,7 +8,8 @@ dotenv.config()
 export const client = postgres(process.env.DATABASE_URL as string, {
   prepare: false,
   ssl: 'require',
-  connect_timeout: 10,
+  connect_timeout: 3,
+  idle_timeout: 3,
 })
 
 export const db = drizzle(client, { schema })
