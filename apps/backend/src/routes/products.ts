@@ -35,11 +35,16 @@ productsRoutes.get('/', async (c) => {
     orderByFilter = [desc(products.price)]
   }
 
-  const allProducts = await db.query.products.findMany({
-    where: conditions.length > 0 ? and(...conditions) : undefined,
-    orderBy: orderByFilter
-  })
-  return c.json(allProducts)
+  try {
+    const allProducts = await db.query.products.findMany({
+      where: conditions.length > 0 ? and(...conditions) : undefined,
+      orderBy: orderByFilter
+    })
+    return c.json(allProducts)
+  } catch (err: any) {
+    console.error("Database query failed:", err)
+    return c.json({ error: "Database connection failed", details: err.message }, 500)
+  }
 })
 
 // Get single product with reviews
