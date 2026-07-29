@@ -21,6 +21,7 @@ export default function AdminProducts() {
   const [prodForm, setProdForm] = useState({ name: '', description: '', price: 0, tag: '' })
   const [imageFile, setImageFile] = useState<File | null>(null)
   const [prodSaving, setProdSaving] = useState(false)
+  const [toastMessage, setToastMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null)
 
   useEffect(() => {
     fetchData()
@@ -55,6 +56,7 @@ export default function AdminProducts() {
   const saveProduct = async (e: React.FormEvent) => {
     e.preventDefault()
     setProdSaving(true)
+    setToastMessage(null)
     const token = localStorage.getItem('token')
     
     const formData = new FormData()
@@ -78,8 +80,12 @@ export default function AdminProducts() {
       
       await fetchData()
       setProductModal({ isOpen: false })
+      setToastMessage({ text: productModal.product ? 'Product updated successfully' : 'Product added successfully', type: 'success' })
+      setTimeout(() => setToastMessage(null), 3000)
     } catch (err) {
       console.error(err)
+      setToastMessage({ text: (err as Error).message || 'Failed to save product', type: 'error' })
+      setTimeout(() => setToastMessage(null), 3000)
     } finally {
       setProdSaving(false)
     }
@@ -209,6 +215,11 @@ export default function AdminProducts() {
               </div>
             </form>
           </div>
+        </div>
+      )}
+      {toastMessage && (
+        <div className={`fixed bottom-6 right-6 px-6 py-4 rounded-xl shadow-2xl font-bold text-white transition-all z-[100] animate-in slide-in-from-bottom-5 ${toastMessage.type === 'success' ? 'bg-green-500' : 'bg-red-500'}`}>
+          {toastMessage.text}
         </div>
       )}
     </div>
