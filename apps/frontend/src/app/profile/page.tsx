@@ -25,7 +25,9 @@ type Order = {
   items: OrderItem[]
 }
 
-export default function ProfilePage() {
+import { Suspense } from 'react'
+
+function ProfileContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const [user, setUser] = useState<{ id: number, email: string, role: string } | null>(null)
@@ -207,5 +209,20 @@ export default function ProfilePage() {
         )}
       </main>
     </div>
+  )
+}
+
+export default function ProfilePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-[#0a0a0a] text-zinc-100 flex flex-col">
+        <Navbar />
+        <div className="flex-1 flex items-center justify-center">
+          <div className="animate-pulse text-zinc-500">Loading profile...</div>
+        </div>
+      </div>
+    }>
+      <ProfileContent />
+    </Suspense>
   )
 }
