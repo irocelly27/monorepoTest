@@ -1,20 +1,14 @@
-import { drizzle } from 'drizzle-orm/node-postgres'
-import { Pool } from 'pg'
+import { drizzle } from 'drizzle-orm/postgres-js'
+import postgres from 'postgres'
 import * as dotenv from 'dotenv'
 import * as schema from './db/schema'
 
 dotenv.config()
 
-export const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: {
-    rejectUnauthorized: false
-  },
-  connectionTimeoutMillis: 5000, // Throw error after 5s instead of hanging
+export const client = postgres(process.env.DATABASE_URL as string, {
+  prepare: false,
+  ssl: 'require',
+  connect_timeout: 10,
 })
 
-pool.on('error', (err) => {
-  console.error('Unexpected error on idle client', err)
-})
-
-export const db = drizzle(pool, { schema })
+export const db = drizzle(client, { schema })
