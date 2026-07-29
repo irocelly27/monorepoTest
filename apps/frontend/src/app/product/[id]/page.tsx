@@ -77,7 +77,7 @@ export default function ProductDetailsPage() {
     )
   }
 
-  if (!product || product.error) {
+  if (!product || ('error' in product)) {
     return (
       <div className="min-h-screen bg-[#0a0a0a] text-zinc-100 flex flex-col">
         <Navbar />
