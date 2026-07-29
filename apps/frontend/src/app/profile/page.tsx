@@ -21,6 +21,7 @@ type Order = {
   totalPrice: number
   status: string
   createdAt: string
+  rejectionReason?: string
   items: OrderItem[]
 }
 
